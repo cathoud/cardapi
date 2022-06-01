@@ -57,21 +57,20 @@ public class CardRepositoryImpl implements CardRepository {
 
     @Override
     public Optional<Card> save(Card card) {
-        String insertQuery = "INSERT INTO card (name, description, image_url) VALUES (?,?,?)";
+        String insertQuery = "INSERT INTO card (name, description, image_url, originId) VALUES (?,?,?,?)";
 
         try(Connection connection = connectionFactory.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
                 statement.setString(1, card.getName());
                 statement.setString(2, card.getDescription());
                 statement.setString(3, card.getImageUrl());
+                statement.setInt(4, (int) card.getCardOrigin().getId());
 
                 statement.execute();
 
                 ResultSet resultSet = statement.getGeneratedKeys();
                 if(resultSet.next()) {
-                    card.setId(resultSet.getInt("id"));
-                    card.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
-                    card.setCreatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
+                    card.setId(resultSet.getInt(1));
 
                     return Optional.of(card);
                 }

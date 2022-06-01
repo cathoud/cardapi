@@ -2,6 +2,7 @@ package com.amecardsapi.service;
 
 import com.amecardsapi.controller.request.CreateCardRequest;
 import com.amecardsapi.model.Card;
+import com.amecardsapi.model.CardOrigin;
 import com.amecardsapi.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,11 @@ public class CardService {
         card.setImageUrl(cardRequest.getImageUrl());
         card.setCreatedAt(LocalDateTime.now());
         card.setUpdatedAt(LocalDateTime.now());
+
+        var cardOrigin = new CardOrigin();
+        cardOrigin.setId(cardRequest.getOriginId());
+
+        card.setCardOrigin(cardOrigin);
 
         return cardRepository.save(card);
     }

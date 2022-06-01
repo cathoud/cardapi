@@ -18,7 +18,7 @@ public class ConnectionFactory {
 
     public Connection getConnection() throws SQLException {
         var connection = DriverManager.getConnection(databaseConfig.getUrl(), databaseConfig.getUsername(), databaseConfig.getPassword());
-        connection.setAutoCommit(false);
+        connection.setAutoCommit(true);
         return connection;
     }
 }
