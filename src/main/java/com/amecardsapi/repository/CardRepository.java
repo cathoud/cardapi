@@ -5,11 +5,14 @@ import com.amecardsapi.model.Card;
 import org.springframework.stereotype.Repository;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CardRepository {
     Optional<Card> findById(int id);
 
-    Optional<Card> save(Card card);
+    Card save(Card card);
+
+    List<Card> listCards();
 }

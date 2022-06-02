@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -25,12 +26,6 @@ public class CardController {
 
     private static final Logger LOG = LoggerFactory.getLogger(CardController.class);
 
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "card not found")
-    public static class CardNotFoundException extends RuntimeException {}
-
-    @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "card not found")
-    public static class CardNotCreated extends RuntimeException {}
-
     @Autowired
     public CardController(CardService cardService) {
         this.cardService = cardService;
@@ -39,12 +34,23 @@ public class CardController {
     @GetMapping("{id}")
     public Card findCardByUuid(@PathVariable("id") int id) {
         LOG.info("Buscando card com id {}", id);
-        return cardService.findByUuid(id).orElseThrow(CardNotFoundException::new);
+
+        var card = cardService.findByUuid(id);
+
+        if(card.isPresent()) {
+            return card.get();
+        }
+
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card not found");
     }
 
     @PostMapping
     public Card createCard(@RequestBody CreateCardRequest createCardRequest) {
-        return cardService.createCard(createCardRequest).orElseThrow(CardNotCreated::new);
+        try {
+            return cardService.createCard(createCardRequest);
+        } catch(Exception e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
     }
 
     @GetMapping

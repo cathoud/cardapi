@@ -1,21 +1,8 @@
 package com.amecardsapi.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-//import javax.persistence.Entity;
-//import javax.persistence.GeneratedValue;
-//import javax.persistence.GenerationType;
-//import javax.persistence.Id;
-//import javax.persistence.JoinTable;
-//import javax.persistence.ManyToMany;
-//import javax.persistence.ManyToOne;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-//@Entity
 public class Card {
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private String name;
@@ -23,8 +10,6 @@ public class Card {
     private String description;
 
     private String imageUrl;
-
-    private CardOrigin cardOrigin;
 
     private int strength;
 
@@ -53,6 +38,46 @@ public class Card {
 
     public String getImageUrl() {
         return this.imageUrl;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getSkill() {
+        return skill;
+    }
+
+    public void setSkill(int skill) {
+        this.skill = skill;
+    }
+
+    public int getGear() {
+        return gear;
+    }
+
+    public void setGear(int gear) {
+        this.gear = gear;
+    }
+
+    public int getIntellect() {
+        return intellect;
+    }
+
+    public void setIntellect(int intellect) {
+        this.intellect = intellect;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -87,20 +112,17 @@ public class Card {
         this.updatedAt = updatedAt;
     }
 
-    public CardOrigin getCardOrigin() {
-        return cardOrigin;
-    }
-
-    public void setCardOrigin(CardOrigin cardOrigin) {
-        this.cardOrigin = cardOrigin;
-    }
-
     public String toString() {
-        return "Card(id=" + this.getId() +
-                ", name=" + this.getName() +
-                ", description=" + this.getDescription() +
-                ", imageUrl=" + this.getImageUrl() +
-                ", createdAt=" + this.getCreatedAt() +
-                ", updatedAt=" + this.getUpdatedAt() + ")";
+        return "Card(id=" + this.id +
+                ", name=" + this.name +
+                ", description=" + this.description +
+                ", imageUrl=" + this.imageUrl +
+                ", strength=" + this.strength +
+                ", speed=" + this.speed +
+                ", skill=" + this.skill +
+                ", gear=" + this.gear +
+                ", intellect=" + this.intellect +
+                ", createdAt=" + this.createdAt +
+                ", updatedAt=" + this.updatedAt + ")";
     }
 }
