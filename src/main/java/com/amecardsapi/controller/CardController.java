@@ -1,16 +1,12 @@
 package com.amecardsapi.controller;
 
+import com.amecardsapi.controller.request.CreateCardRequest;
 import com.amecardsapi.model.Card;
 import com.amecardsapi.service.CardService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/card")
@@ -28,12 +24,11 @@ public class CardController {
     public Card findCardById(@PathVariable("id") int id) {
         LOG.info("Buscando card com id {}", id);
 
-        var card = cardService.findById(id);
+        return cardService.findById(id);
+    }
 
-        if(card.isPresent()) {
-            return card.get();
-        }
-
-        throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Card not found");
+    @PostMapping
+    public Card createCard(@RequestBody CreateCardRequest createCardRequest) {
+        return cardService.createCard(createCardRequest);
     }
 }

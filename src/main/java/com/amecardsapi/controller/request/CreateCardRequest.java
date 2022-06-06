@@ -1,10 +1,6 @@
-package com.amecardsapi.model;
+package com.amecardsapi.controller.request;
 
-import java.time.LocalDateTime;
-
-public class Card {
-    private long id;
-
+public class CreateCardRequest {
     private String name;
 
     private String description;
@@ -20,13 +16,6 @@ public class Card {
     private int gear;
 
     private int intellect;
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
-
-    public long getId() {
-        return this.id;
-    }
 
     public String getName() {
         return this.name;
@@ -38,6 +27,18 @@ public class Card {
 
     public String getImageUrl() {
         return this.imageUrl;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getStrength() {
@@ -80,49 +81,14 @@ public class Card {
         this.intellect = intellect;
     }
 
-    public LocalDateTime getCreatedAt() {
-        return this.createdAt;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return this.updatedAt;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
-
-    public void setUpdatedAt(LocalDateTime updatedAt) {
-        this.updatedAt = updatedAt;
-    }
-
     public String toString() {
-        return "Card(id=" + this.id +
-                ", name=" + this.name +
+        return "CreateCardRequest(name=" + this.name +
                 ", description=" + this.description +
                 ", imageUrl=" + this.imageUrl +
                 ", strength=" + this.strength +
                 ", speed=" + this.speed +
                 ", skill=" + this.skill +
                 ", gear=" + this.gear +
-                ", intellect=" + this.intellect +
-                ", createdAt=" + this.createdAt +
-                ", updatedAt=" + this.updatedAt + ")";
+                ", intellect=" + this.intellect + ")";
     }
 }
