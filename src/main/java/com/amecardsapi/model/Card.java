@@ -20,6 +20,9 @@ public class Card {
     private int gear;
 
     private int intellect;
+
+    private int originId;
+
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
@@ -80,6 +83,14 @@ public class Card {
         this.intellect = intellect;
     }
 
+    public int getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(int originId) {
+        this.originId = originId;
+    }
+
     public LocalDateTime getCreatedAt() {
         return this.createdAt;
     }
@@ -122,6 +133,7 @@ public class Card {
                 ", skill=" + this.skill +
                 ", gear=" + this.gear +
                 ", intellect=" + this.intellect +
+                ", originId=" + this.originId +
                 ", createdAt=" + this.createdAt +
                 ", updatedAt=" + this.updatedAt + ")";
     }

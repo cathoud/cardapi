@@ -17,6 +17,8 @@ public class CreateCardRequest {
 
     private int intellect;
 
+    private int originId;
+
     public String getName() {
         return this.name;
     }
@@ -81,6 +83,14 @@ public class CreateCardRequest {
         this.intellect = intellect;
     }
 
+    public int getOriginId() {
+        return originId;
+    }
+
+    public void setOriginId(int originId) {
+        this.originId = originId;
+    }
+
     public String toString() {
         return "CreateCardRequest(name=" + this.name +
                 ", description=" + this.description +
@@ -89,6 +99,7 @@ public class CreateCardRequest {
                 ", speed=" + this.speed +
                 ", skill=" + this.skill +
                 ", gear=" + this.gear +
-                ", intellect=" + this.intellect + ")";
+                ", intellect=" + this.intellect +
+                ", originId=" + originId + ")";
     }
 }
