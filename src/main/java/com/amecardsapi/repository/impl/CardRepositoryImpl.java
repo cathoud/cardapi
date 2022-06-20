@@ -2,6 +2,7 @@ package com.amecardsapi.repository.impl;
 
 import com.amecardsapi.exception.ApplicationException;
 import com.amecardsapi.model.Card;
+import com.amecardsapi.model.CardOrigin;
 import com.amecardsapi.repository.CardRepository;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,7 +24,7 @@ public class CardRepositoryImpl implements CardRepository {
 
     @Override
     public Optional<Card> findById(int id) {
-        String query = "SELECT * FROM card WHERE id = ?";
+        String query = "SELECT * FROM card JOIN origin on card.originId = origin.id WHERE card.id = ?";
 
         try(Connection connection = connectionFactory.getConnection()) {
             try(PreparedStatement statement = connection.prepareStatement(query)) {
@@ -42,9 +43,18 @@ public class CardRepositoryImpl implements CardRepository {
                     card.setSkill(resultSet.getInt("skill"));
                     card.setGear(resultSet.getInt("gear"));
                     card.setIntellect(resultSet.getInt("intellect"));
-                    card.setOriginId(resultSet.getInt("originId"));
                     card.setCreatedAt(resultSet.getTimestamp("created_at").toLocalDateTime());
                     card.setUpdatedAt(resultSet.getTimestamp("updated_at").toLocalDateTime());
+
+                    CardOrigin cardOrigin = new CardOrigin();
+                    cardOrigin.setId(resultSet.getInt("origin.id"));
+                    cardOrigin.setName(resultSet.getString("origin.name"));
+                    cardOrigin.setDescription(resultSet.getString("origin.description"));
+                    cardOrigin.setCreator(resultSet.getString("origin.creator"));
+                    cardOrigin.setCreatedAt(resultSet.getTimestamp("origin.created_at").toLocalDateTime());
+                    cardOrigin.setUpdatedAt(resultSet.getTimestamp("origin.updated_at").toLocalDateTime());
+
+                    card.setCardOrigin(cardOrigin);
 
                     return Optional.of(card);
                 }
@@ -73,7 +83,7 @@ public class CardRepositoryImpl implements CardRepository {
                 statement.setInt(8, card.getIntellect());
                 statement.setTimestamp(9, Timestamp.valueOf(card.getCreatedAt()));
                 statement.setTimestamp(10, Timestamp.valueOf(card.getUpdatedAt()));
-                statement.setInt(11, (int) card.getOriginId());
+                statement.setInt(11, (int) card.getCardOrigin().getId());
 
                 statement.execute();
 
