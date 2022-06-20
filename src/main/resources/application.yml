@@ -1,6 +1,11 @@
 server:
-  port: 8080
   error:
     include-message: always
-#    include-binding-errors: always
+    include-binding-errors: always
+    include-stacktrace: on_param
     include-exception: false
+
+database:
+  url: jdbc:mysql://localhost:3306/db_cards
+  username: root
+  password: example
