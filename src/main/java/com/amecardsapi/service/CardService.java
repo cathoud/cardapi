@@ -29,8 +29,8 @@ public class CardService {
 
     public Card createCard(CreateCardRequest cardRequest) {
 
-//        cardOriginRepository.findById(cardRequest.getOriginId())
-//                .orElseThrow(() -> new EntityNotFoundException("Card origin id [" + cardRequest.getOriginId() + "] not found."));
+        cardOriginRepository.findById(cardRequest.getOriginId())
+                .orElseThrow(() -> new EntityNotFoundException("Card origin id [" + cardRequest.getOriginId() + "] not found."));
 
         var card = new Card();
 
