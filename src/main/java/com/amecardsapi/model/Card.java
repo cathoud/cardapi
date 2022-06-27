@@ -1,8 +1,13 @@
 package com.amecardsapi.model;
 
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@Entity
 public class Card {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
@@ -21,6 +26,7 @@ public class Card {
 
     private int intellect;
 
+    @ManyToOne
     private CardOrigin origin;
 
     private LocalDateTime createdAt;

@@ -1,11 +1,15 @@
 package com.amecardsapi.service;
 
 import com.amecardsapi.controller.request.CreateCardRequest;
+import com.amecardsapi.exception.ApplicationException;
 import com.amecardsapi.exception.EntityNotFoundException;
+import com.amecardsapi.exception.InvalidEntityAttributeException;
 import com.amecardsapi.model.Card;
+import com.amecardsapi.model.CardOrigin;
 import com.amecardsapi.repository.CardOriginRepository;
 import com.amecardsapi.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -23,13 +27,13 @@ public class CardService {
     }
 
     public Card findById(int id) {
-        return this.cardRepository.findById(id)
+        return this.cardRepository.findById((long) id)
                 .orElseThrow(() -> new EntityNotFoundException("Card id [" + id + "] not found."));
     }
 
     public Card createCard(CreateCardRequest cardRequest) {
 
-        var cardOrigin = cardOriginRepository.findById(cardRequest.getOriginId())
+        var cardOrigin = cardOriginRepository.findById((long) cardRequest.getOriginId())
                 .orElseThrow(() -> new EntityNotFoundException("Card origin id [" + cardRequest.getOriginId() + "] not found."));
 
         var card = new Card();
@@ -48,6 +52,10 @@ public class CardService {
         card.setCreatedAt(LocalDateTime.now());
         card.setUpdatedAt(LocalDateTime.now());
 
-        return cardRepository.save(card);
+        try {
+            return cardRepository.save(card);
+        } catch (DataAccessException e) {
+            throw new InvalidEntityAttributeException(e.getMostSpecificCause().getMessage());
+        }
     }
 }

@@ -19,7 +19,7 @@ public class CardOriginService {
     }
 
     public CardOrigin findById(int id) {
-        return this.cardOriginRepository.findById(id)
+        return this.cardOriginRepository.findById((long) id)
                 .orElseThrow(() -> new EntityNotFoundException("Card origin id [" + id + "] not found."));
     }
 
