@@ -1,11 +1,29 @@
 package com.amecardsapi.model;
 
+import com.amecardsapi.controller.request.CardRequest;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 public class Card {
 
+    public Card() {}
+    public Card(CardRequest cardRequest) {
+        this.name = cardRequest.getName();
+        this.description = cardRequest.getDescription();
+        this.imageUrl = cardRequest.getImageUrl();
+        this.strength = cardRequest.getStrength();
+        this.speed = cardRequest.getSpeed();
+        this.skill = cardRequest.getSkill();
+        this.intellect = cardRequest.getIntellect();
+        this.gear = cardRequest.getGear();
+
+        CardOrigin cardOrigin = new CardOrigin();
+        cardOrigin.setId(cardRequest.getOriginId());
+
+        this.origin = cardOrigin;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
